@@ -1,0 +1,55 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(240, 168, 190);
+  }
+  .editDelete{
+      float: right;
+      margin: 3px;
+      padding: 3px 10px;
+  }
+  #form1{
+      border-radius: 10px;
+      background-color: #4a529d;
+  }
+  #submitBtn{
+    background-color: #628dda;
+    border-color: #628dda;
+    color: white;
+  }
+  #navigation{
+    background-color: #7a6bac;
+  }
+  #categoryBtn{
+    background-color: #628dda;
+    width: auto;
+    border-radius: 7px;
+    border: none;
+    color: white;
+  }
+  #category{
+    width: 300px;
+  }
+ .input-group-text{
+    background-color: #628dda;
+    color: white;
+    border: none;
+ }
+ #description{
+    width: 5000px;
+ }
+ .trStyle{
+    background-color: #aac5e6;
+ }
+ #categoryBtn:hover, #submitBtn:hover{
+    background-color: #aac5e6;
+    color: #628dda;
+    border-color: #628dda;
+ }
+ .editDelete{
+    background-color: #628dda;
+    border: none;
+ }
+ thead{
+   color: white;
+ }
