@@ -34,7 +34,7 @@ function addItem(e) {
         alert('Input Required in All feilds.');
     }
     else {
-        
+
         //Creating the new row.
 
         let tr = document.createElement('tr');
@@ -59,7 +59,7 @@ function addItem(e) {
         deleteBtn.className = 'editDelete btn btn-danger delete';
         deleteBtn.appendChild(document.createTextNode('Delete'));
 
-        
+
         td4.appendChild(deleteBtn);
         tr.appendChild(th);
         tr.appendChild(td1);
@@ -76,15 +76,17 @@ function addItem(e) {
             desciption: descriptionValue,
             amount: amountValue
         }
-      
-        axios.post('https://crudcrud.com/api/2ec1e6e7bfdc4624a51162fb94f8d3a7/OrderData', values)
-        .then(data => {
-            console.log(data);
-            tr.id = data.data._id;
-        })
-        .catch(err => console.error(err))
 
-        
+        // axios.post('https://crudcrud.com/api/83dc29a49926407889b43f026454ab75/OrderData', values)
+        // .then(data => {
+        //     console.log(data);
+        //     tr.id = data.data._id;
+        // })
+        // .catch(err => console.error(err))
+
+        axiosPost(values, tr);
+
+
 
 
         //Emptying the input's after taking the value.
@@ -100,10 +102,12 @@ function deleteRow(e) {
     if (e.target.classList.contains('delete')) {
         let tr = e.target.parentElement.parentElement;
         // console.log(tr.children[2].textContent);
-        
-        axios.delete(`https://crudcrud.com/api/2ec1e6e7bfdc4624a51162fb94f8d3a7/OrderData/${tr.id}`)
-        .then(data => console.log(data))
-        .catch(err => console.error(err))
+
+        // axios.delete(`https://crudcrud.com/api/83dc29a49926407889b43f026454ab75/OrderData/${tr.id}`)
+        // .then(data => console.log(data))
+        // .catch(err => console.error(err))
+
+        axiosDelete(tr);
         table.removeChild(tr);
     }
 }
@@ -111,12 +115,42 @@ function deleteRow(e) {
 // submit.addEventListener('click', addItem);
 // table.addEventListener('click', deleteRow);
 
-window.addEventListener('DOMContentLoaded', function(e){
-    axios.get(`https://crudcrud.com/api/2ec1e6e7bfdc4624a51162fb94f8d3a7/OrderData`)
-    .then(data => {
-        data.data.forEach(element => {
-            // console.log(element);
-            
+window.addEventListener('DOMContentLoaded', async function getData() {
+    const data = await axiosGet();
+    createTableRows(data.data);
+})
+
+async function axiosDelete(tr) {
+    try {
+        const data = await axios.delete(`https://crudcrud.com/api/f283e86ec05c4ec68f57a582d00676b5/OrderData/${tr.id}`)
+        console.log(data);
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+async function axiosGet() {
+    try {
+        return await axios.get(`https://crudcrud.com/api/f283e86ec05c4ec68f57a582d00676b5/OrderData`);
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function axiosPost(values, tr) {
+    try {
+        const data = await axios.post('https://crudcrud.com/api/f283e86ec05c4ec68f57a582d00676b5/OrderData', values)
+        console.log(data);
+        tr.id = data.data._id;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+function createTableRows(data) {
+    data.forEach(element => {
         let tr = document.createElement('tr');
         tr.className = 'align-middle trStyle';
         tr.id = element._id;
@@ -140,7 +174,6 @@ window.addEventListener('DOMContentLoaded', function(e){
         deleteBtn.className = 'editDelete btn btn-danger delete';
         deleteBtn.appendChild(document.createTextNode('Delete'));
 
-        
         td4.appendChild(deleteBtn);
         tr.appendChild(th);
         tr.appendChild(td1);
@@ -148,7 +181,6 @@ window.addEventListener('DOMContentLoaded', function(e){
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
+    });
+}
 
-        });
-    })
-})
